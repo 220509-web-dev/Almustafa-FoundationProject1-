@@ -2,7 +2,7 @@ package DAO;
 
 import Entities.User;
 
-import utils.ConnectionUtil;
+import utils.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class UserDAOPostgres implements UserDAO{
     @Override
     public User createUser(User user) {
 
-        try{Connection conn = ConnectionUtil.getConnection();
+        try{Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "insert into football_app.app_users values (default,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//
             ps.setString(1, user.getUsername());
@@ -39,7 +39,7 @@ public class UserDAOPostgres implements UserDAO{
     public  User getUserById(int id) {
         // try with resources. Automatically closes the connection once the try block finishes
 
-        try{Connection conn = ConnectionUtil.getConnection();
+        try{Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "select * from football_app.app_users where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,id);
@@ -72,7 +72,7 @@ public class UserDAOPostgres implements UserDAO{
     @Override
     public List<User> getAllUsers(){
 
-        try{Connection conn = ConnectionUtil.getConnection();
+        try{Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "select * from football_app.app_users";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -98,7 +98,7 @@ public class UserDAOPostgres implements UserDAO{
     @Override
     public User updateUser(User user) {
 
-        try{Connection conn = ConnectionUtil.getConnection();
+        try{Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "update football_app.app_users set username = ?, set password = ? where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUsername());
@@ -118,7 +118,7 @@ public class UserDAOPostgres implements UserDAO{
     @Override
     public void deleteUserById(int id) {
 
-        try{Connection conn = ConnectionUtil.getConnection();
+        try{Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "delete from football_app.app_users where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,id);

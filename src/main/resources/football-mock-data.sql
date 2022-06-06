@@ -12,3 +12,6 @@ select * from app_users where username = 'Almustafa';
 
 -- Get user by password
 select * from app_users where password = 'cowboys3333';
+
+update app_users set username = ?, set password = ? where id = ?
+
