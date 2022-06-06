@@ -52,20 +52,22 @@ public class UserDAOPostgres implements UserDAO{
             ResultSet rs = ps.executeQuery(); // JDBC actually interacts with the DB
 
             //Get First Record
-            rs.next();
+            if (rs.next()) {
+                User user = new User();
 
-            // Create a book and set the values of that book to the information in the result set
-            User user = new User();
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
 
-            user.setUsername(rs.getString("username"));
-            user.setPassword(rs.getString("password"));
+                return user;
+            }
 
-            return user;
-
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException e) {
+            logError(e);
+            e.printStackTrace();
+        } catch (Throwable t) {
+            logError(t);
+            t.printStackTrace();
         }
-
         return null;
     }
 
@@ -73,12 +75,27 @@ public class UserDAOPostgres implements UserDAO{
     public User getUserByUsername(String username) {
         try {
             Connection conn = ConnectionFactory.getInstance().getConnection();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+            String sql = "select * from football_app.app_users where username = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,username);
+            ResultSet rs = ps.executeQuery(); // JDBC actually interacts with the DB
 
+            //Get First Record
+            if (rs.next()) {
+                User user = new User();
+
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+
+                return user;
+            }
+        } catch (SQLException e) {
+            logError(e);
+            e.printStackTrace();
+        } catch (Throwable t) {
+            logError(t);
+            t.printStackTrace();
         }
-
-        String sql = "select * from football_app.app_users where username = ?";
         return null;
     }
 
@@ -102,8 +119,12 @@ public class UserDAOPostgres implements UserDAO{
             }
             return users;
 
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException e) {
+            logError(e);
+            e.printStackTrace();
+        } catch (Throwable t) {
+            logError(t);
+            t.printStackTrace();
         }
         return null;
     }
@@ -122,8 +143,12 @@ public class UserDAOPostgres implements UserDAO{
 
             return user;
 
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException e) {
+            logError(e);
+            e.printStackTrace();
+        } catch (Throwable t) {
+            logError(t);
+            t.printStackTrace();
         }
         return null;
     }
@@ -136,8 +161,12 @@ public class UserDAOPostgres implements UserDAO{
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,id);
             ps.execute();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException e) {
+            logError(e);
+            e.printStackTrace();
+        } catch (Throwable t) {
+            logError(t);
+            t.printStackTrace();
         }
 
     }

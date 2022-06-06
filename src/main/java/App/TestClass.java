@@ -19,7 +19,6 @@ public class TestClass {
             int i = 1/0;
         } catch (Throwable t) {
             logError(t);
-            logError("Well, we tried to divide by zero!");
         }
 
     }
