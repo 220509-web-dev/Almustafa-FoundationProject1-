@@ -1,0 +1,10 @@
+06/06/2022 18:31:08
+java.lang.ArithmeticException: / by zero
+	at App.TestClass.iterate(TestClass.java:19)
+	at App.TestClass.main(TestClass.java:12)
+
+06/06/2022 18:31:08
+Well, we tried to divide by zero!
+
+
+

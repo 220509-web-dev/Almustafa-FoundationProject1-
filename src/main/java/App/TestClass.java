@@ -5,19 +5,22 @@ import utils.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static logger.CustomLogger.logError;
+
 public class TestClass {
     public static void main(String[] args) {
-        for (int i=2; i<300; i=i*i) System.out.println(i);
+        for (int i=2; i<300; i=i*i) iterate();
 
 
 
         }
     public static void iterate() {
         try {
-            System.out.println("iterated");
-            Connection conn = ConnectionFactory.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            int i = 1/0;
+        } catch (Throwable t) {
+            logError(t);
+            logError("Well, we tried to divide by zero!");
         }
+
     }
 }

@@ -8,6 +8,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static logger.CustomLogger.logError;
+
 public class UserDAOPostgres implements UserDAO{
 
     @Override
@@ -29,8 +31,12 @@ public class UserDAOPostgres implements UserDAO{
 
             user.setUserid(generatedId);// the book id changing for 0 to a non zero values means that it is saved
             return user;
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException e) {
+            logError(e);
+            e.printStackTrace();
+        } catch (Throwable t) {
+            logError(t);
+            t.printStackTrace();
         }
         return null;
     }
@@ -65,6 +71,13 @@ public class UserDAOPostgres implements UserDAO{
 
     @Override
     public User getUserByUsername(String username) {
+        try {
+            Connection conn = ConnectionFactory.getInstance().getConnection();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+
+        }
+
         String sql = "select * from football_app.app_users where username = ?";
         return null;
     }
