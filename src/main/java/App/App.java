@@ -11,8 +11,8 @@ public class App {
         UserDAO userDAO = new UserDAOPostgres();
 //        User user = userDAO.getUserById(3);
 //
-//        List<User> userList = userDAO.getAllUsers();
-//        System.out.println(userList);
+        List<User> userList = userDAO.getAllUsers();
+        System.out.println(userList);
 
         User test = userDAO.getUserByUsername("fwefew");
         System.out.println(test);

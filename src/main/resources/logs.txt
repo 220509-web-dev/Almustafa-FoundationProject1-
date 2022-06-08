@@ -25,3 +25,6 @@
 [LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-08T12:57:32.078603700
 [LOG] - INFO - Successfully retrieved all users - 2022-06-08T12:57:32.088873200
 
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-08T13:54:24.303783300
+[LOG] - INFO - Successfully retrieved all users - 2022-06-08T13:54:24.392699200
+
