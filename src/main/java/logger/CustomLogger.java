@@ -1,71 +1,48 @@
 package logger;
 
-import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
 
 public class CustomLogger {
-    static final String loggerPath = "loggedComplaints.log";
 
-    public static void logError(Throwable t) {
-        setup();
+    private static Path location = Paths.get("src/main/resources/logs.txt");
+
+    public static void log(String message, LogLevel level) {
+        String logInfo;
+
         try {
-            String pattern = "MM/dd/yyyy HH:mm:ss";
-            DateFormat df = new SimpleDateFormat(pattern);
-            Date today = Calendar.getInstance().getTime();
-            String todayAsString = df.format(today);
-            FileWriter fw = new FileWriter(loggerPath,true);
-            BufferedWriter writer = new BufferedWriter(fw);
-
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            t.printStackTrace(pw);
-            String sStackTrace = sw.toString(); // stack trace as a string
-
-
-            writer.write(todayAsString + "\n" + sStackTrace + "\n");
-
-
-
-            writer.close();
-
-            // need to write the stacktrace
-
+            if (!Files.exists(location)) {
+                logInfo = String.format("[LOG] - %s - %s - %s\n",level.name(), "Log file created.", LocalDateTime.now());
+                Files.write(location, logInfo.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE_NEW);
+            }
+            logInfo = String.format("[LOG] - %s - %s - %s\n",level.name(), message, LocalDateTime.now());
+            Files.write(location, logInfo.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
-    public static void logError(String debugMessage) {
-        setup();
+    public static void parser(){
+        String logInfo;
         try {
-            String pattern = "MM/dd/yyyy HH:mm:ss";
-            DateFormat df = new SimpleDateFormat(pattern);
-            Date today = Calendar.getInstance().getTime();
-            String todayAsString = df.format(today);
-            FileWriter fw = new FileWriter(loggerPath,true);
-            BufferedWriter writer = new BufferedWriter(fw);
-
-            writer.write(todayAsString + "\n" + debugMessage + "\n" + "\n");
-            writer.close();
-            //System.out.println("Wrote things to the file!");
-        } catch (Throwable t) {}
-    }
-
-    private static void setup() {
-        // create a file if it doesn't exist
-        try {
-            File myObj = new File(loggerPath);
-            if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
-            } else {
-                //System.out.println("File already exists.");
-            }
+            logInfo = "\n";
+            Files.write(location, logInfo.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
         } catch (IOException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
 }
+
+
+
+
+
+
+
+
+

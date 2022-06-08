@@ -2,16 +2,19 @@ package DAO;
 
 import Entities.User;
 
+import logger.LogLevel;
 import utils.ConnectionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import logger.CustomLogger;
+import utils.exceptions.UsernameNotAvailableException;
 
-import static logger.CustomLogger.logError;
 
 public class UserDAOPostgres implements UserDAO{
 
+    private String logstring;
     @Override
     public User createUser(User user) {
 
@@ -32,10 +35,8 @@ public class UserDAOPostgres implements UserDAO{
             user.setUserid(generatedId);// the book id changing for 0 to a non zero values means that it is saved
             return user;
         } catch (SQLException e) {
-            logError(e);
             e.printStackTrace();
         } catch (Throwable t) {
-            logError(t);
             t.printStackTrace();
         }
         return null;
@@ -55,6 +56,7 @@ public class UserDAOPostgres implements UserDAO{
             if (rs.next()) {
                 User user = new User();
 
+                user.setUserid(id);
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
 
@@ -62,10 +64,8 @@ public class UserDAOPostgres implements UserDAO{
             }
 
         } catch (SQLException e) {
-            logError(e);
             e.printStackTrace();
         } catch (Throwable t) {
-            logError(t);
             t.printStackTrace();
         }
         return null;
@@ -81,28 +81,28 @@ public class UserDAOPostgres implements UserDAO{
             ResultSet rs = ps.executeQuery(); // JDBC actually interacts with the DB
 
             //Get First Record
-            if (rs.next()) {
-                User user = new User();
-
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
+            rs.next();
+            User user = new User();
+            user.setUserid(rs.getInt("id"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
 
                 return user;
-            }
-        } catch (SQLException e) {
-            logError(e);
+            } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Throwable t) {
-            logError(t);
-            t.printStackTrace();
+            throw new UsernameNotAvailableException("Username not found");
         }
-        return null;
+
+
     }
 
     @Override
     public List<User> getAllUsers(){
 
         try{Connection conn = ConnectionFactory.getInstance().getConnection();
+            logstring="Attempting to retrieve all users from the Database";
+            CustomLogger.log(logstring, LogLevel.INFO);
+
             String sql = "select * from football_app.app_users";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -117,13 +117,16 @@ public class UserDAOPostgres implements UserDAO{
 
                 users.add(user);
             }
+
+            logstring="Successfully retrieved all users";
+            CustomLogger.log(logstring, LogLevel.INFO);
+            CustomLogger.parser();
+
             return users;
 
         } catch (SQLException e) {
-            logError(e);
             e.printStackTrace();
         } catch (Throwable t) {
-            logError(t);
             t.printStackTrace();
         }
         return null;
@@ -144,10 +147,8 @@ public class UserDAOPostgres implements UserDAO{
             return user;
 
         } catch (SQLException e) {
-            logError(e);
             e.printStackTrace();
         } catch (Throwable t) {
-            logError(t);
             t.printStackTrace();
         }
         return null;
@@ -162,10 +163,8 @@ public class UserDAOPostgres implements UserDAO{
             ps.setInt(1,id);
             ps.execute();
         } catch (SQLException e) {
-            logError(e);
             e.printStackTrace();
         } catch (Throwable t) {
-            logError(t);
             t.printStackTrace();
         }
 
