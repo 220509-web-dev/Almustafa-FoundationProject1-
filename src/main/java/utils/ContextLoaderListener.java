@@ -10,6 +10,7 @@ import DAO.UserDAO;
 import DAO.UserDAOPostgres;
 import Entities.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import servlets.UserNameServlet;
 import servlets.UserServlet;
 
 public class ContextLoaderListener implements ServletContextListener {
@@ -20,14 +21,15 @@ public class ContextLoaderListener implements ServletContextListener {
         System.out.println("[LOG] - Context Loader Listener has been initialized at - " + LocalDateTime.now());
 
         ObjectMapper mapper = new ObjectMapper();
-        UserDAO userDAO = new UserDAOPostgres();
-        UserServlet userServlet = new UserServlet(mapper, userDAO);
+        UserDAOPostgres userDAOPostgres = new UserDAOPostgres();
+        UserServlet userServlet = new UserServlet(mapper, userDAOPostgres);
+        UserNameServlet userNameServlet = new UserNameServlet(mapper, userDAOPostgres);
 
 
         ServletContext context = sce.getServletContext();
 
-        ServletRegistration.Dynamic servletRegistration = context.addServlet("UserServlet", userServlet);
-        servletRegistration.addMapping("/users/*");
 
+        context.addServlet("UserServlet", userServlet).addMapping("/users/*");
+        context.addServlet("UserNameServlet", userNameServlet).addMapping("/username/*");
     }
 }

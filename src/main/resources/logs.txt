@@ -28,3 +28,27 @@
 [LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-08T13:54:24.303783300
 [LOG] - INFO - Successfully retrieved all users - 2022-06-08T13:54:24.392699200
 
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-09T17:38:17.606737600
+[LOG] - INFO - Successfully retrieved all users - 2022-06-09T17:38:17.659490400
+
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-09T17:39:26.343971100
+[LOG] - INFO - Successfully retrieved all users - 2022-06-09T17:39:26.387202600
+
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-09T17:56:52.043578
+[LOG] - INFO - Successfully retrieved all users - 2022-06-09T17:56:52.082568800
+
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-09T18:10:45.904389800
+[LOG] - INFO - Successfully retrieved all users - 2022-06-09T18:10:45.947705
+
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-09T18:21:42.128039
+[LOG] - INFO - Successfully retrieved all users - 2022-06-09T18:21:42.178538200
+
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-09T18:31:28.400399900
+[LOG] - INFO - Successfully retrieved all users - 2022-06-09T18:31:28.457477500
+
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-09T18:32:05.495255400
+[LOG] - INFO - Successfully retrieved all users - 2022-06-09T18:32:05.539577800
+
+[LOG] - INFO - Attempting to retrieve all users from the Database - 2022-06-09T18:52:47.646410500
+[LOG] - INFO - Successfully retrieved all users - 2022-06-09T18:52:47.691332
+

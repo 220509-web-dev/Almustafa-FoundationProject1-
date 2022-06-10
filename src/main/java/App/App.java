@@ -8,7 +8,7 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        UserDAO userDAO = new UserDAOPostgres();
+        UserDAOPostgres userDAO = new UserDAOPostgres();
 //        User user = userDAO.getUserById(3);
 //
         List<User> userList = userDAO.getAllUsers();

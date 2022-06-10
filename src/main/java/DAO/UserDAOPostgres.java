@@ -77,23 +77,23 @@ public class UserDAOPostgres implements UserDAO{
             Connection conn = ConnectionFactory.getInstance().getConnection();
             String sql = "select * from football_app.app_users where username = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1,username);
+            ps.setString(1, username);
             ResultSet rs = ps.executeQuery(); // JDBC actually interacts with the DB
 
             //Get First Record
-            rs.next();
+            if (rs.next());
             User user = new User();
             user.setUserid(rs.getInt("id"));
             user.setUsername(rs.getString("username"));
             user.setPassword(rs.getString("password"));
 
-                return user;
+            return user;
             } catch (SQLException e) {
             e.printStackTrace();
-            throw new UsernameNotAvailableException("Username not found");
+//            throw new UsernameNotAvailableException("Username not found");
         }
 
-
+        return null;
     }
 
     @Override
